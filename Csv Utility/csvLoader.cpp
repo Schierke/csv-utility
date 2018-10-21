@@ -31,16 +31,16 @@ void CsvLoader::readCSV(std::ifstream& str)
 			break;
 		}
 
-		std::cout << row << std::endl;
-
 		// saving the row into class csvRow:
 		CsvRow * temporaryRow = new CsvRow();
 		temporaryRow->getData(row);
-		allRows.push_back(temporaryRow);
+		allRows.push_back(*temporaryRow);
 	}
 
 	// Debugging:
-
+	for (auto i = allRows.begin(); i != allRows.end(); i++) {
+		i->printData();
+	}
 }
 
 void CsvRow::getData(std::string data)
@@ -52,7 +52,7 @@ void CsvRow::getData(std::string data)
 	}
 }
 
-void CsvRow::prinData()
+void CsvRow::printData()
 {
 	for (auto i = m_data.begin(); i != m_data.end(); i++) {
 		std::cout << *i << ";" << std::endl;
