@@ -1,0 +1,4 @@
+# ignore all debug folders
+Debug
+Csv Utility/Debug
+.vs
