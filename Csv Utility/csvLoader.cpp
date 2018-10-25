@@ -1,7 +1,13 @@
 #include "csvLoader.h"
 
-// standard library:
+// stl:
 #include <sstream>
+#include <numeric>
+#include <algorithm>
+
+// boost
+#include <boost/lexical_cast.hpp>
+#include <boost/optional.hpp>
 
 CsvLoader * CsvLoader::instance = 0;
 
@@ -43,6 +49,41 @@ void CsvLoader::readCSV(std::ifstream& str)
 	}
 }
 
+void CsvLoader::processingMethod(const std::string & processingMethod, const std::string & parameter)
+{
+
+	// getting parameter
+	Config::EnumParser<Config::METHOD> parse;
+	Config::METHOD usingMethod = parse.parseSomeEnum(processingMethod);
+	int indexRowSorting = boost::lexical_cast<int>(parameter);
+
+	switch (usingMethod)
+	{
+	case Config::SORTING_BY_ROW:
+		sortingByRow(indexRowSorting);
+		break;
+	case Config::SORTING_BY_NUMBER:
+		break;
+	default:
+		break;
+	}
+
+
+
+}
+
+void CsvLoader::sortingByRow(int indexRowSorting)
+{
+	// sorting alphabetically:
+	std::vector<int> index;
+	std::iota(index.begin(), index.end(), 0);
+
+}
+
+void CsvLoader::sortingByNumber()
+{
+}
+
 void CsvRow::getData(std::string data)
 {
 	std::stringstream tempRowData(data);
@@ -50,6 +91,16 @@ void CsvRow::getData(std::string data)
 	while (std::getline(tempRowData, tempData, ';')) {
 		m_data.push_back(tempData);
 	}
+}
+
+std::string CsvRow::getRowData(int index)
+{
+	if (index > m_data.size()) {
+		std::cerr << "ERROR INPUT: OUT OF BOUND ROW DATA" << std::endl;
+		return "-- OUT OF BOUND --"; // TODO: use boost::optional
+	}
+	
+	return m_data[index];
 }
 
 void CsvRow::printData()

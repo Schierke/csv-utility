@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef CSVLOADER_H
 #define CSVHOADER_H
+
+#include "config.h"
 
 #include <fstream>
 #include <string>
@@ -19,6 +23,7 @@ public:
 	~CsvRow() {};
 
 	void getData(std::string data);
+	std::string getRowData(int index);
 
 	// Debugging
 	void printData();
@@ -26,7 +31,7 @@ public:
 };
 
 /*
-	Class for loading and pre-processing csv loader, fetching csv datas to our database
+Class for loading and pre-processing csv loader, fetching csv datas to our database
 */
 class CsvLoader
 {
@@ -44,6 +49,9 @@ public:
 
 	// processing
 	void readCSV(std::ifstream& str);
+	void processingMethod(const std::string & processingMethod, const std::string & parameter);
+	void sortingByRow(int indexRowSorting);
+	void sortingByNumber();
 };
 
 
