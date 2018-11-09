@@ -4,3 +4,4 @@ Csv Utility/Debug
 .vs
 packages.config
 packages
+*.csv

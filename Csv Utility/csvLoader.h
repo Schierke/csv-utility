@@ -22,9 +22,17 @@ public:
 	CsvRow() {};
 	~CsvRow() {};
 
-	void getData(std::string data);
+	void setData(std::string data);
 	std::string getRowData(int index);
 
+	inline int getNumberOfRows() const
+	{
+		return m_data.size();
+	}
+	inline std::vector<std::string> getAllData() const
+	{
+		return m_data;
+	}
 	// Debugging
 	void printData();
 
@@ -38,10 +46,12 @@ class CsvLoader
 	// singleton
 public:
 	static CsvLoader* getInstance();
+
 private:
 	CsvLoader();
 	static CsvLoader* instance;
 	std::vector<CsvRow> allRows;
+	std::vector<std::size_t> sortedIndexes;
 
 public:
 	CsvLoader(CsvLoader const&) = delete;
@@ -52,6 +62,13 @@ public:
 	void processingMethod(const std::string & processingMethod, const std::string & parameter);
 	void sortingByRow(int indexRowSorting);
 	void sortingByNumber();
+	std::vector<std::string> getAllRowsDataByIndex(int index);
+	void writeCSV(std::ofstream& str);
+
+
+	template<typename T>
+	std::vector<std::size_t> sortIndexes(const std::vector<T> &v);
+	
 };
 
 
