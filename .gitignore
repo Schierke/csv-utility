@@ -1,6 +1,7 @@
 # ignore all debug folders
 Debug
 Csv Utility/Debug
+Csv Utility/cpp.hint
 .vs
 packages.config
 packages

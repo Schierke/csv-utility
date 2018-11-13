@@ -14,9 +14,9 @@ CsvLoader * CsvLoader::instance = 0;
 template <typename T>
 std::ostream& operator<<(std::ostream & os, const std::vector<T> & v)
 {
-	for (int i = 1; i < v.size() - 1; i++)
+	for (auto i :v)
 	{
-		os << v[i] << ";";
+		os << i << ";";
 	}
 	os << v[v.size() - 1];
 	return os;
@@ -87,12 +87,10 @@ void CsvLoader::processingMethod(const std::string & processingMethod, const std
 
 void CsvLoader::sortingByRow(int indexRowSorting)
 {
-	// if index > siezofRows or Negative:
-	if (indexRowSorting > allRows[0].getNumberOfRows() || indexRowSorting < 0)
-	{
-		std::cerr << " ROW INDEX IS NOT VALID" << std::endl;
-		return;
-	}
+
+	ASSERT_WITH_MSG(indexRowSorting > 0, "Error: the input index isn't valid. It's below 0!");
+	ASSERT_WITH_MSG(indexRowSorting < allRows[0].getNumberOfRows(), "Error: index out of bound!");
+
 
 	// get indexes:
 	sortedIndexes = this->sortIndexes(this->getAllRowsDataByIndex(indexRowSorting));

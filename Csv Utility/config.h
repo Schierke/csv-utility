@@ -6,6 +6,12 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <cstdlib>
+
+
+#define ASSERT_WITH_MSG(cond, msg) do \
+{ if (!(cond)) { std::ostringstream str; str << msg; std::cout << str.str(); std::abort(); } \
+} while(0)
 
 namespace Config
 {
@@ -14,6 +20,12 @@ namespace Config
 	{
 		SORTING_BY_ROW,
 		SORTING_BY_NUMBER
+	};
+
+	enum ORDER
+	{
+		ASCENDING,
+		DESCENDING
 	};
 
 	template <typename T>
@@ -39,6 +51,11 @@ namespace Config
 		enumMap["SORTING_BY_NUMBER"] = SORTING_BY_NUMBER;
 	}
 
+	EnumParser<ORDER>::EnumParser()
+	{
+		enumMap["ASCENDING"] = ASCENDING;
+		enumMap["DESCENDING"] = DESCENDING;
+	}
 
 }
 #endif // ! CONFIG_H
